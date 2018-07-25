@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using CourtApi.com.pillartechnology.court;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -76,6 +77,13 @@ namespace CourtKataTest.com.pillartechnology.court.acceptance.framework
             Assert.IsTrue(httpResponseMessage.IsSuccessStatusCode);
 
             return this;
+        }
+
+        public void VerifyResourceNotFound()
+        {
+            var response = _httpClient.GetAsync(_rootUrl + "/docket/" + _docketNumber).Result;
+                   
+            Assert.IsTrue(response.StatusCode == HttpStatusCode.NotFound);
         }
     }
 }

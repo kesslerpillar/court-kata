@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Net;
 using CourtApi.com.pillartechnology.court;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace CourtApi.Controllers
 {
@@ -18,7 +20,15 @@ namespace CourtApi.Controllers
         [HttpGet("{docketNumber}")]
         public ActionResult<IList<Case>> LookupByDocketNumber(string docketNumber)
         {
-            return (List<Case>) _repository.FindByDocketNumber(docketNumber);
+            var lookupByDocketNumber = (List<Case>) _repository.FindByDocketNumber(docketNumber);
+            if (lookupByDocketNumber.Count > 0)
+            {
+                return lookupByDocketNumber;
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         [HttpDelete("{docketNumber}")]

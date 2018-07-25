@@ -6,7 +6,7 @@ namespace CourtKataTest.com.pillartechnology.court.acceptance.framework
         private const string ROOT_URL = "https://localhost:5001/court";
         private readonly CaseSubmitter _submitter;
         private readonly CaseRetriever _retriever;
-
+        
         public Accept()
         {
             _retriever = new CaseRetriever(ROOT_URL);
@@ -42,6 +42,16 @@ namespace CourtKataTest.com.pillartechnology.court.acceptance.framework
         public CaseRetriever TheDatabaseIsUpdatedWithTheCaseFile()
         {
             return _retriever;
+        }
+
+        public CaseRetriever UserRequestsTheCaseFile()
+        {
+            return _retriever;
+        }
+
+        public void ResourceNotFoundResponseIsReturned()
+        {
+            _retriever.VerifyResourceNotFound();
         }
     }
 }

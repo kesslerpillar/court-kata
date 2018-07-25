@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CourtKataTest.com.pillartechnology.court.acceptance
 {
+    
     [TestClass]
     public class CourtAdministratorScenarios
     {
@@ -15,7 +16,7 @@ namespace CourtKataTest.com.pillartechnology.court.acceptance
             accept.Given().CaseFileDoesNotExit()
                 .WithDocketNumber("testDocketNumber")
                 .Delete()
-                .Verify(0);
+                .VerifyResourceNotFound();
             
             accept.When().NewCaseFileIsSubmitted()
                 .WithDocketNumber("testDocketNumber")
@@ -29,6 +30,26 @@ namespace CourtKataTest.com.pillartechnology.court.acceptance
                 .WithDescription("testDescription")
                 .WithOpenDateBetween(DateTime.Today, DateTime.Now)
                 .Verify(1);
+
+        }
+        
+        [TestMethod]
+        public void AsCourtAdministrator_IWantClearResponseMessages_SoThatSystemsCanHandleMissingData()
+        {
+
+            var accept = new Accept();
+            
+            accept.Given().CaseFileDoesNotExit()
+                .WithDocketNumber("testDocketNumber")
+                .Delete()
+                .VerifyResourceNotFound();
+
+            accept.When().UserRequestsTheCaseFile()
+                .WithDocketNumber("testDocketNumber");
+                
+            accept.Then()
+                .ResourceNotFoundResponseIsReturned();
+
         }
 
     }
