@@ -53,5 +53,15 @@ namespace CourtKataTest.com.pillartechnology.court.acceptance.framework
         {
             _retriever.VerifyResourceNotFound();
         }
+
+        public CaseSubmitter AnExistingCaseFile()
+        {
+            return _submitter;
+        }
+
+        public void TheCaseFileIsReturned()
+        {
+            _retriever.Verify(1);
+        }
     }
 }

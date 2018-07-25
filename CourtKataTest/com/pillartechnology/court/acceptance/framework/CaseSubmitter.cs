@@ -20,6 +20,8 @@ namespace CourtKataTest.com.pillartechnology.court.acceptance.framework
         {
             _rootUrl = rootUrl;
             _httpClient = new HttpClient();
+            _title = "default tile";
+            _description = "default description";
         }
 
         public CaseSubmitter WithDocketNumber(string docketNumber)
@@ -56,6 +58,11 @@ namespace CourtKataTest.com.pillartechnology.court.acceptance.framework
             var httpResponseMessage = _httpClient.PostAsync(_rootUrl + "/docket", stringContent).Result;
             
             Assert.IsTrue(httpResponseMessage.IsSuccessStatusCode);
+        }
+
+        public void Add()
+        {
+            Successfully();
         }
     }
 }

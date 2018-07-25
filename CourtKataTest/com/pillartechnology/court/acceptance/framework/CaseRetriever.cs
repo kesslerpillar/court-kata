@@ -22,6 +22,10 @@ namespace CourtKataTest.com.pillartechnology.court.acceptance.framework
         {
             _rootUrl = rootUrl;
             _httpClient = new HttpClient();
+            _title = "default tile";
+            _description = "default description";
+            _startDateTime = DateTime.Today;
+            _endDateTime = _startDateTime.AddDays(1);
         }
         
         public CaseRetriever WithTitle(string title)
