@@ -22,7 +22,7 @@ namespace CourtApi
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddSingleton<CaseRepository, CaseRepository>();
+            services.AddSingleton<CasePersistable, CaseRepository>();
             
             services.AddSwaggerGen(c =>
             {

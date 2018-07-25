@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using CourtApi.com.pillartechnology.court;
-using Microsoft.AspNetCore.Identity.UI.Pages.Internal.Account;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CourtApi.Controllers
@@ -11,33 +8,33 @@ namespace CourtApi.Controllers
     [ApiController]
     public class DocketController : ControllerBase
     {
-        private readonly CaseRepository _repository;
+        private readonly CasePersistable _repository;
 
-        public DocketController(CaseRepository repository)
+        public DocketController(CasePersistable repository)
         {
             _repository = repository;
         }
 
         [HttpGet("{docketNumber}")]
-        public ActionResult<IList<Case>> Get(string docketNumber)
+        public ActionResult<IList<Case>> LookupByDocketNumber(string docketNumber)
         {
             return (List<Case>) _repository.FindByDocketNumber(docketNumber);
         }
 
         [HttpDelete("{docketNumber}")]
-        public void Delete(string docketNumber)
+        public void RemoveByDocketNumber(string docketNumber)
         {
             _repository.Delete(docketNumber);
         }
         
         [HttpGet]
-        public ActionResult<IList<Case>> GetAll()
+        public ActionResult<IList<Case>> LookupAll()
         {
             return (List<Case>) _repository.FindAll();
         }
         
         [HttpPost]
-        public void Post(Case @case)
+        public void Add(Case @case)
         {
             _repository.Save(@case);
         }

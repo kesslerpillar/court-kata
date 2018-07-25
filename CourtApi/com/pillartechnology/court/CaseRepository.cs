@@ -3,7 +3,8 @@ using System.Linq;
 
 namespace CourtApi.com.pillartechnology.court
 {
-    public class CaseRepository
+
+    public class CaseRepository : CasePersistable
     {
         private readonly IDictionary<string, Case> _repository;
 
@@ -35,7 +36,10 @@ namespace CourtApi.com.pillartechnology.court
 
         public void Delete(string docketNumber)
         {
-            _repository.Remove(docketNumber);
+            if (_repository.ContainsKey(docketNumber))
+            {
+                _repository.Remove(docketNumber);
+            }
         }
     }
 }
