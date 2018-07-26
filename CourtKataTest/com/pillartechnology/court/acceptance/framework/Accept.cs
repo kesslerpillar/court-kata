@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.AspNetCore.TestHost;
+
 namespace CourtKataTest.com.pillartechnology.court.acceptance.framework
 {
     public class Accept
@@ -7,10 +9,10 @@ namespace CourtKataTest.com.pillartechnology.court.acceptance.framework
         private readonly CaseSubmitter _submitter;
         private readonly CaseRetriever _retriever;
         
-        public Accept()
+        public Accept(TestServer testServer)
         {
-            _retriever = new CaseRetriever(ROOT_URL);
-            _submitter = new CaseSubmitter(ROOT_URL);
+            _retriever = new CaseRetriever(testServer, ROOT_URL);
+            _submitter = new CaseSubmitter(testServer, ROOT_URL);
         }
 
         public Accept Given()

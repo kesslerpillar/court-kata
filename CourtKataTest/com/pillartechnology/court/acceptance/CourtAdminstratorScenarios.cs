@@ -1,5 +1,8 @@
 using System;
+using CourtApi;
 using CourtKataTest.com.pillartechnology.court.acceptance.framework;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CourtKataTest.com.pillartechnology.court.acceptance
@@ -8,12 +11,26 @@ namespace CourtKataTest.com.pillartechnology.court.acceptance
     [TestClass]
     public class CourtAdministratorScenarios
     {
+        private static TestServer _server;
         private Accept _accept;
+
+        [ClassInitialize]
+        public static void SetUpClass(TestContext context)
+        {
+            _server = new TestServer(new WebHostBuilder()
+                .UseStartup<Startup>());
+        }
+
+        [ClassCleanup]
+        public static void TearDownClass()
+        {
+            _server.Dispose();
+        }
 
         [TestInitialize]
         public void SetUp()
         {
-            _accept = new Accept();
+            _accept = new Accept(_server);
         }
         
         [TestMethod]

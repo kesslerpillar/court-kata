@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Text;
 using CourtApi.com.pillartechnology.court;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 
@@ -15,10 +16,10 @@ namespace CourtKataTest.com.pillartechnology.court.acceptance.framework
         private readonly string _rootUrl;
         private readonly HttpClient _httpClient;
 
-        public CaseSubmitter(string rootUrl)
+        public CaseSubmitter(TestServer testServer, string rootUrl)
         {
             _rootUrl = rootUrl;
-            _httpClient = new HttpClient();
+            _httpClient = testServer.CreateClient();
             _title = "default tile";
             _description = "default description";
         }
