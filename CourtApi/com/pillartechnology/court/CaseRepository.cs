@@ -6,40 +6,39 @@ namespace CourtApi.com.pillartechnology.court
 
     public class CaseRepository : CasePersistable
     {
-        private readonly IDictionary<string, Case> _repository;
+        private readonly CaseContext _context;
 
-        public CaseRepository()
+        public CaseRepository(CaseContext context)
         {
-            _repository = new Dictionary<string, Case>();
+            _context = context;
         }
 
         public IList<Case> FindAll()
         {
-            return _repository.Select(keyValuePair => keyValuePair.Value).ToList();
+            return _context.Cases.ToList();
         }
 
         public IList<Case> FindByDocketNumber(string docketNumber)
         {
-            var cases = new List<Case>();
-            
-            if (_repository.ContainsKey(docketNumber))
-            {
-                cases.Add(_repository[docketNumber]);
-            }
-            return cases;
+            return _context.Cases
+                .Where(c => c.DocketNumber == docketNumber)
+                .ToList();
         }
 
         public void Save(Case @case)
         {
-            _repository[@case.DocketNumber] = @case;
+            _context.Cases.Add(@case);
+            _context.SaveChanges();
         }
 
         public void Delete(string docketNumber)
         {
-            if (_repository.ContainsKey(docketNumber))
+            foreach (var @case in FindByDocketNumber(docketNumber))
             {
-                _repository.Remove(docketNumber);
+                _context.Cases.Remove(@case);
             }
+            
+            _context.SaveChanges();
         }
     }
 }

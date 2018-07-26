@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Net;
 using CourtApi.com.pillartechnology.court;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace CourtApi.Controllers
 {
