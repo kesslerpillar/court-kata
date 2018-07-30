@@ -11,28 +11,18 @@ namespace CourtKataTest.com.pillartechnology.court.acceptance
     [TestClass]
     public class CourtAdministratorScenarios
     {
-        private static TestServer _server;
+        private TestServer _server;
         private Accept _accept;
-
-        [ClassInitialize]
-        public static void SetUpClass(TestContext context)
-        {
-            _server = new TestServer(new WebHostBuilder()
-                .UseStartup<Startup>());
-        }
-
-        [ClassCleanup]
-        public static void TearDownClass()
-        {
-            _server.Dispose();
-        }
 
         [TestInitialize]
         public void SetUp()
         {
+            _server = new TestServer(new WebHostBuilder()
+                .UseStartup<Startup>());
+            
             _accept = new Accept(_server);
         }
-        
+
         [TestMethod]
         public void AsCourtAdministrator_IWantToAddNewCaseFile_SoThatTheCourtCanTrackIt()
         {    
@@ -81,6 +71,12 @@ namespace CourtKataTest.com.pillartechnology.court.acceptance
                 
             _accept.Then()
                 .ResourceNotFoundResponseIsReturned();
+        }
+        
+        [TestCleanup]
+        public void TearDownClass()
+        {
+            _server.Dispose();
         }
 
     }
